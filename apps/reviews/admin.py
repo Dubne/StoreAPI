@@ -3,4 +3,5 @@ from ..reviews.models import Review
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['user', 'product', 'mark']
+    list_filter = ['product', 'user']

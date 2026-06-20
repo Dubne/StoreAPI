@@ -6,3 +6,5 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     inventory = models.IntegerField()
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
+    def __str__(self):
+        return self.title
