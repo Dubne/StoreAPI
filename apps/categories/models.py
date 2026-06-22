@@ -1,7 +1,7 @@
 from django.db import models
 
 class Category(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=255)
     
     def __str__(self):
