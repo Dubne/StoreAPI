@@ -52,7 +52,7 @@ LOCAL_APPS = [
     'apps.products'
 ]
 OTHERS_APPS = [
-    
+    'rest_framework',
 ]
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + OTHERS_APPS
 
