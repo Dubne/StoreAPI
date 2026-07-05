@@ -27,3 +27,8 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
+
+class OrderUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['status']
