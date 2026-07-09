@@ -23,7 +23,7 @@ class OrderListSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:
         model = Order
-        fields=['id','user', 'on_created', 'status', 'items']
+        fields=['id','user', 'on_created', 'status','total_price', 'items']
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)

@@ -11,6 +11,9 @@ class Order(models.Model):
         DELIVERED = 'delivered',
         CANCELLED = 'cancelled'
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
+    @property
+    def total_price(self):
+        return sum(item.total_price for item in self.items.all())
 
    
 
@@ -24,5 +27,9 @@ class OrderItem(models.Model):
         if not self.pk:
             self.price = self.product.price
         return super().save(*args, **kwargs)
+    
+    @property
+    def total_price(self):
+        return self.price * self.amount
 
    
