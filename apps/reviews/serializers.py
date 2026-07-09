@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Review
+from .models import Review
 from ..products.serializers import ProductShortSerializer
 from ..users.serializers import UserSerializer
 

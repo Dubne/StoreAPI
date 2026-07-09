@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Order, OrderItem
+from .models import Order, OrderItem
 from ..products.serializers import ProductShortSerializer
 from ..users.serializers import UserSerializer
 from ..products.models import Product
@@ -8,7 +8,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductShortSerializer(read_only=True)
     class Meta:
         model = OrderItem
-        fields = ['id','price', 'amount', 'product']
+        fields = ['price', 'amount', 'product']
 
 class OrderItemCreateSerializer(serializers.ModelSerializer):
     product = serializers.PrimaryKeyRelatedField(
@@ -27,6 +27,9 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
+    class Meta:
+        model = Order
+        fields = ['items']
 
 class OrderUpdateSerializer(serializers.ModelSerializer):
     class Meta:

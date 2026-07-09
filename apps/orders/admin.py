@@ -6,6 +6,7 @@ from ..orders.models import Order, OrderItem
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
+    exclude = ['price']
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -16,5 +17,5 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    pass
+    exclude = ['price']
 

@@ -20,4 +20,9 @@ class OrderItem(models.Model):
     amount = models.IntegerField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.price = self.product.price
+        return super().save(*args, **kwargs)
+
    

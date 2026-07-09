@@ -6,20 +6,19 @@ from apps.orders.views import OrderViewSet
 from django.contrib import admin
 from django.urls import include, path
 
-CategoryRouter = DefaultRouter()
-CategoryRouter.register(
+Router = DefaultRouter()
+Router.register(
     r"categories", CategoryViewSet, basename='category'
 )
-ProductRouter = DefaultRouter()
-ProductRouter.register(
+
+Router.register(
     r"products", ProductViewSet, basename='product'
 )
-ReviewRouter = DefaultRouter()
-ReviewRouter.register(
+
+Router.register(
     r"review", ReviewViewSet, basename='review'
 )
-OrderRouter = DefaultRouter()
-OrderRouter.register(
+Router.register(
     r"orders", OrderViewSet, basename = 'order'
 )
-urlpatterns = [path('admin/', admin.site.urls)] + CategoryRouter.urls + ProductRouter.urls + ReviewRouter.urls + OrderRouter.urls
+urlpatterns = [path('admin/', admin.site.urls)] + Router.urls
