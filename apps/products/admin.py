@@ -22,6 +22,6 @@ class InventoryAmountFilter(admin.SimpleListFilter):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    search_fields = ['title','category__title']
+    search_fields = ['id', 'title','category__title']
     list_filter = [InventoryAmountFilter]
 

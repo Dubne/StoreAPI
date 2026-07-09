@@ -29,5 +29,3 @@ class OrderViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
 
-class OrderItemViewSet(viewsets.ModelViewSet):
-    pass

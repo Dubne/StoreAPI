@@ -8,7 +8,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductShortSerializer(read_only=True)
     class Meta:
         model = OrderItem
-        fields = ['price', 'amount', 'product']
+        fields = ['id','price', 'amount', 'product']
 
 class OrderItemCreateSerializer(serializers.ModelSerializer):
     product = serializers.PrimaryKeyRelatedField(
@@ -26,10 +26,18 @@ class OrderListSerializer(serializers.ModelSerializer):
         fields=['id','user', 'on_created', 'status','total_price', 'items']
 
 class OrderCreateSerializer(serializers.ModelSerializer):
-    items = OrderItemSerializer(many=True)
+    items = OrderItemCreateSerializer(many=True)
     class Meta:
         model = Order
         fields = ['items']
+
+    def create(self, validated_data):
+        items_data = validated_data.pop('items')
+        request = self.context["request"]
+        order = Order.objects.create(user=request.user)
+        for item in items_data:
+            OrderItem.objects.create(order=order, product=item["product"], amount=item["amount"] )
+        return order
 
 class OrderUpdateSerializer(serializers.ModelSerializer):
     class Meta:

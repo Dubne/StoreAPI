@@ -21,4 +21,5 @@ Router.register(
 Router.register(
     r"orders", OrderViewSet, basename = 'order'
 )
+
 urlpatterns = [path('admin/', admin.site.urls)] + Router.urls
