@@ -1,6 +1,8 @@
 from rest_framework.exceptions import ValidationError
-from reviews.models import Review
+from .models import Review
+from django.db import transaction
 
+@transaction.atomic
 def can_user_create_review(user, product):
 
     review_exists = Review.objects.filter(
@@ -15,6 +17,7 @@ def can_user_create_review(user, product):
 
     return True
 
+@transaction.atomic
 def create_review(data, user):
 
     product = data["product"]

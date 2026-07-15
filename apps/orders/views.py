@@ -26,7 +26,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         if self.action in ['partial_update']:
             return [IsAdminUser()]
         return super().get_permissions()
-    
+     
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
 
