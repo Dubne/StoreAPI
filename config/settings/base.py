@@ -53,6 +53,7 @@ LOCAL_APPS = [
 ]
 OTHERS_APPS = [
     'rest_framework',
+    'djoser'
 ]
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + OTHERS_APPS
 

@@ -26,6 +26,12 @@ class OrderViewSet(viewsets.ModelViewSet):
         if self.action in ['partial_update']:
             return [IsAdminUser()]
         return super().get_permissions()
+    
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
+
+    def list(self, request, *args, **kwargs):
+        print(request.headers)
+        print(request.META.get("HTTP_AUTHORIZATION"))
+        return super().list(request, *args, **kwargs)
 

@@ -5,21 +5,26 @@ from apps.reviews.views import ReviewViewSet
 from apps.orders.views import OrderViewSet
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView 
 
 Router = DefaultRouter()
 Router.register(
-    r"categories", CategoryViewSet, basename='category'
+    r"api/categories", CategoryViewSet, basename='category'
 )
 
 Router.register(
-    r"products", ProductViewSet, basename='product'
+    r"api/products", ProductViewSet, basename='product'
 )
 
 Router.register(
-    r"review", ReviewViewSet, basename='review'
+    r"api/review", ReviewViewSet, basename='review'
 )
 Router.register(
-    r"orders", OrderViewSet, basename = 'order'
+    r"api/orders", OrderViewSet, basename = 'order'
 )
 
-urlpatterns = [path('admin/', admin.site.urls)] + Router.urls
+urlpatterns = [path('admin/', admin.site.urls)] + [
+    path("api/token/",TokenObtainPairView.as_view(),name="token_obtain_pair",)] + [
+    path("api/token/refresh/",TokenRefreshView.as_view(),name="token_refresh",)] + [
+    path("api/", include("djoser.urls")),
+    path("api/", include("djoser.urls.jwt"))] + Router.urls
