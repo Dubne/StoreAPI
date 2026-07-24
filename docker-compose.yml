@@ -1,0 +1,22 @@
+services:
+  web:
+    depends_on:
+            - db
+    build: .
+    ports: 
+      - "8000:8000"
+    volumes:
+      - .:/app
+    
+
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB=storeapi_db
+      POSTGRES_USER=storeapi_user
+      POSTGRES_PASSWORD=1234
+    volumes:
+        - postgres_data:/var/lib/postgresql/data
+  volumes:
+
+    postgres_data:

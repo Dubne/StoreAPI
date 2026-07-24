@@ -53,7 +53,8 @@ LOCAL_APPS = [
 ]
 OTHERS_APPS = [
     'rest_framework',
-    'djoser'
+    'djoser',
+    'drf_spectacular'
 ]
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + OTHERS_APPS
 
@@ -61,9 +62,10 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PAGINATION_CLASS":  (
+    "DEFAULT_PAGINATION_CLASS":  
         "core.pagination.DefaultPagination",
-    ),
+    "DEFAULT_SCHEMA_CLASS":
+        "drf_spectacular.openapi.AutoSchema",
 }
 
 MIDDLEWARE = [
