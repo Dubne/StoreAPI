@@ -19,7 +19,7 @@ Router.register(
 )
 
 Router.register(
-    r"api/review", ReviewViewSet, basename='review'
+    r"api/reviews", ReviewViewSet, basename='review'
 )
 Router.register(
     r"api/orders", OrderViewSet, basename = 'order'

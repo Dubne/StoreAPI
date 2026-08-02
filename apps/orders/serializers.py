@@ -3,6 +3,7 @@ from .models import Order, OrderItem
 from ..products.serializers import ProductShortSerializer
 from ..users.serializers import UserSerializer
 from ..products.models import Product
+from .services import create_order
 
 class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductShortSerializer(read_only=True)
@@ -32,13 +33,11 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         fields = ['items']
 
     def create(self, validated_data):
-        items_data = validated_data.pop('items')
-        request = self.context["request"]
-        order = Order.objects.create(user=request.user)
-        for item in items_data:
-            OrderItem.objects.create(order=order, product=item["product"], amount=item["amount"] )
-        return order
-
+        return create_order(
+            user=self.context["request"].user,
+            data=validated_data
+        )
+    
 class OrderUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order

@@ -12,7 +12,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ['destroy', 'update', 'partial_update']:
-            return [IsOwnerOrAdmin]
+            return [IsOwnerOrAdmin()]
         return super().get_permissions()
     
     def perform_create(self, serializer):

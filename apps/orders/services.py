@@ -6,8 +6,7 @@ from django.db import transaction
 def create_order(user, data):
     items = data["items"]
     check_inventory(items)
-    total_price = calculate_total_price(items)
-    order = Order.objects.create(user=user, total_price=total_price)
+    order = Order.objects.create(user=user)
     create_order_items(order, items)
     reduce_inventory(order)
     return order
@@ -19,7 +18,7 @@ def create_order_items(order, items):
         OrderItem.objects.create(
             order=order,
             product=item["product"],
-            quantity=item["quantity"]
+            amount=item["amount"]
         )
 
 def return_inventory(order):
@@ -54,11 +53,5 @@ def check_inventory(items):
         
     
 
-
-def calculate_total_price(items):
-    total_price = 0
-    for item in items:
-        total_price += item.product.price * item.amount
-    return total_price
 
 

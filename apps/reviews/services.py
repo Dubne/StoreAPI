@@ -30,8 +30,8 @@ def create_review(data, user):
     review = Review.objects.create(
         user=user,
         product=product,
-        rating=data["rating"],
-        description=data["description"]
+        mark=data["mark"],
+        review=data["review"]
     )
 
     return review
