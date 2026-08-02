@@ -5,7 +5,7 @@ A RESTful e-commerce backend built with **Django REST Framework**. This project 
 ---
 
 ## Features
-
+ 
 * JWT Authentication (Djoser + SimpleJWT)
 * User registration and authentication
 * Product management
