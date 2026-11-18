@@ -73,8 +73,8 @@ tests/
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/store-api.git
-cd store-api
+git clone https://github.com/Dubne/StoreAPI.git
+cd StoreAPI
 ```
 
 Create a `.env` file using `.env.example`.
