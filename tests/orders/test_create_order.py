@@ -88,6 +88,52 @@ def test_order_is_not_created_when_inventory_is_insufficient(
     assert Order.objects.count() == 0
     assert product.inventory == 10
 
+@pytest.mark.django_db
+def test_duplicate_items_are_checked_and_reduced_as_one_quantity(
+        client,
+        user,
+        product
+):
+    client.force_authenticate(user=user)
+
+    response = client.post(
+        "/api/orders/",
+        {
+            "items": [
+                {"product": product.id, "amount": 6},
+                {"product": product.id, "amount": 5}
+            ]
+        },
+        format="json"
+    )
+
+    product.refresh_from_db()
+
+    assert response.status_code == 400
+    assert Order.objects.count() == 0
+    assert product.inventory == 10
+
+@pytest.mark.django_db
+def test_order_item_amount_must_be_positive(
+        client,
+        user,
+        product
+):
+    client.force_authenticate(user=user)
+
+    response = client.post(
+        "/api/orders/",
+        {
+            "items": [
+                {"product": product.id, "amount": 0}
+            ]
+        },
+        format="json"
+    )
+
+    assert response.status_code == 400
+    assert Order.objects.count() == 0
+
 import pytest
 
 from apps.orders.models import Order

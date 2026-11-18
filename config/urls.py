@@ -1,4 +1,4 @@
-from rest_framework.routers import DefaultRouter, SimpleRouter
+from rest_framework.routers import DefaultRouter
 from apps.categories.views import CategoryViewSet
 from apps.products.views import ProductViewSet
 from apps.reviews.views import ReviewViewSet

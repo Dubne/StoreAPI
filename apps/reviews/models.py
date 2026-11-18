@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-from ..orders.models import Product
+from ..products.models import Product
 from ..users.models import User
 
 class Review(models.Model):

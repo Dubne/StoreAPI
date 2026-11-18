@@ -1,8 +1,9 @@
-from rest_framework import viewsets
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
-from core.permissions import IsOwner, ReadOnly, IsOwnerOrAdmin, SAFE_METHODS
-from .serializers import OrderCreateSerializer, OrderItemSerializer,OrderItemCreateSerializer, OrderListSerializer, OrderUpdateSerializer
+from rest_framework import status, viewsets
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.response import Response
+from .serializers import OrderCreateSerializer, OrderListSerializer, OrderUpdateSerializer
 from .models import Order, OrderItem
+from .services import cancel_order
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
@@ -30,8 +31,25 @@ class OrderViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
 
-    def list(self, request, *args, **kwargs):
-        print(request.headers)
-        print(request.META.get("HTTP_AUTHORIZATION"))
-        return super().list(request, *args, **kwargs)
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop("partial", False)
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance,
+            data=request.data,
+            partial=partial
+        )
+        serializer.is_valid(raise_exception=True)
+
+        if serializer.validated_data.get("status") == Order.Status.CANCELLED:
+            if instance.status != Order.Status.CANCELLED:
+                cancel_order(instance)
+        else:
+            serializer.save()
+
+        serializer.instance = instance
+        return Response(
+            self.get_serializer(instance).data,
+            status=status.HTTP_200_OK
+        )
 

@@ -15,6 +15,7 @@ class OrderItemCreateSerializer(serializers.ModelSerializer):
     product = serializers.PrimaryKeyRelatedField(
         queryset = Product.objects.all()
     )
+    amount = serializers.IntegerField(min_value=1)
     class Meta:
         model = OrderItem
         fields = ['product', 'amount']
